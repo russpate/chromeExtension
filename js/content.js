@@ -10,8 +10,10 @@ var inaGiphy = {
     inaGiphy.styling();
     inaGiphy.events();
   },
+
   styling: function(){
   },
+
   events: function(){
     $('.app').on('submit', 'form', function(event) {
       event.preventDefault();
@@ -20,10 +22,17 @@ var inaGiphy = {
       inaGiphy.getGF(url);
     });
   },
+
   buildTemplate: function (templateStr) {
     return _.template(templates[searchResults]);
   },
   buildData: function (el) {
+    console.log('what is this el', el);
+    arr = [];
+    _.each(el.data, function(el){
+      console.log(el.url);
+      // .push(arr)
+    });
       return {
         url: el.data.baseUrl
       };
@@ -33,9 +42,16 @@ var inaGiphy = {
     return searchResult;
   },
   addToDom: function (result, $target) {
+    console.log('what result', result);
+    console.log("what is target", $target);
     $target.html('');
     var htmlInsert = "";
-      htmlInsert += templates.result;
+      htmlInsert +=
+      '<p>your inaGiphy search results are:</p>'
+      + '<div><img src="'
+      + inaGiphy.data.url
+      + '"/>'
+      + '</div>';
     $target.html(htmlInsert);
   },
   getGF: function(url){
@@ -43,7 +59,7 @@ var inaGiphy = {
     url: url,
     method: 'GET',
     success: function (result) {
-      console.log("SUCCESS!", result);
+      console.log("SUCCESS!",url, result);
       inaGiphy.addToDom(inaGiphy.buildData(result),$('.app'));
     },
     error: function (err) {
@@ -70,4 +86,4 @@ var inaGiphy = {
   },
 };
 
-$(".app").html(templates.app);
+// $(".app").html(templates.app);

@@ -9,7 +9,7 @@ templates.app = [
 
 templates.searchResults = [
   '<p>your inaGiphy search results are:</p>',
-  '<div><img src=">',
+  '<div><img src="',
   '<%= url %>',
   '"/>',
   '</div>'
