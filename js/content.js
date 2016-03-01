@@ -1,6 +1,8 @@
+// All gifs provided thanks to giphy
 $(document).ready(function() {
   inaGiphy.init();
 });
+// This is a public api key please visit http://api.giphy.com/ for more information about getting a private key.
 var apiKey = ("dc6zaTOxFJmzC");
 var inaGiphy = {
   baseUrl: 'http://api.giphy.com/',
@@ -13,18 +15,17 @@ var inaGiphy = {
   events: function(){
     $('.app').on('submit', 'form', function(event) {
       event.preventDefault();
-      // inaGiphy.submitSearch();
       var searchTerm = $("#in-a-giphy-search").val();
       var url = inaGiphy.baseUrl + 'v1/gifs/search?q=' + searchTerm.replace(" ","+") + '&api_key=dc6zaTOxFJmzC';
       inaGiphy.getGF(url);
     });
   },
   buildTemplate: function (templateStr) {
-    return _.template(templates.searchResults);
+    return _.template(templates[searchResults]);
   },
-  buildData: function (arr) {
+  buildData: function (el) {
       return {
-        url: arr[url]
+        url: el.data.baseUrl
       };
   },
   getFromDom: function () {
@@ -52,7 +53,7 @@ var inaGiphy = {
   },
   addGF: function(newSearch){
     $.ajax({
-      url: inaGiphy.baseUrl,
+      // url: inaGiphy.baseUrl,
       method: 'GET',
       data: newSearch,
       success: function (response) {

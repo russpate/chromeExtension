@@ -10,7 +10,7 @@ templates.app = [
 templates.searchResults = [
   '<p>your inaGiphy search results are:</p>',
   '<div><img src=">',
-  '<%= bitly_gif_url %>',
+  '<%= url %>',
   '"/>',
   '</div>'
 ].join("");
