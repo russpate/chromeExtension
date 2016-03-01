@@ -1,3 +1,5 @@
+/*jshint ignore: start*/
+
 // All gifs provided thanks to giphy
 $(document).ready(function() {
   inaGiphy.init();
@@ -15,10 +17,10 @@ var inaGiphy = {
   },
 
   events: function(){
-    $('.app').on('submit', 'form', function(event) {
+    $('.searchForm').on('submit', 'form', function(event) {
       event.preventDefault();
       var searchTerm = $("#in-a-giphy-search").val();
-      var url = inaGiphy.baseUrl + 'v1/gifs/search?q=' + searchTerm.replace(" ","+") + '&api_key=dc6zaTOxFJmzC';
+      var url = inaGiphy.baseUrl + 'v1/gifs/search?q=' + searchTerm.replace(" ","20%") + '&api_key=dc6zaTOxFJmzC';
       inaGiphy.getGF(url);
     });
   },
@@ -27,31 +29,35 @@ var inaGiphy = {
     return _.template(templates[searchResults]);
   },
   buildData: function (el) {
-    console.log('what is this el', el);
-    arr = [];
-    _.each(el.data, function(el){
-      console.log(el.url);
-      // .push(arr)
-    });
-      return {
-        url: el.data.baseUrl
-      };
-  },
+   console.log('what is this el', el);
+
+     return _.map(el.data, function (item) {
+             return {
+               src: "https://media.giphy.com/media/"+ item.id +"/giphy.gif",
+               embedUrl: item.url
+             };
+           });
+ },
   getFromDom: function () {
     var searchResult = $('input[name="giphySearch"]').val();
     return searchResult;
   },
-  addToDom: function (result, $target) {
-    console.log('what result', result);
+  addToDom: function (data, $target) {
+    console.log('what result', data);
     console.log("what is target", $target);
     $target.html('');
     var htmlInsert = "";
+
+    _.each(data,function(item) {
       htmlInsert +=
-      '<p>your inaGiphy search results are:</p>'
-      + '<div><img src="'
-      + inaGiphy.data.url
+      '<div class="gifBox"><img src="'
+      + item.src
       + '"/>'
+      + '<a href="'
+      + item.embedUrl
+      + '"><div id="in-a-giphy-link">link to giphy</div></a>'
       + '</div>';
+});
     $target.html(htmlInsert);
   },
   getGF: function(url){
@@ -60,7 +66,7 @@ var inaGiphy = {
     method: 'GET',
     success: function (result) {
       console.log("SUCCESS!",url, result);
-      inaGiphy.addToDom(inaGiphy.buildData(result),$('.app'));
+      inaGiphy.addToDom(inaGiphy.buildData(result),$('.giffies'));
     },
     error: function (err) {
       console.log("oh nooooo", err);

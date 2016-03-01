@@ -5,4 +5,51 @@
 
 body {
   max-width: 1000px;
-  min-width: 500px; }
+  min-width: 500px;
+  margin: 0 auto;
+  margin-top: 30px;
+  font-family: 'Work Sans', sans-serif;
+  text-align: center; }
+
+form#in-a-giphy-search-form {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px; }
+
+input#in-a-giphy-search {
+  font-size: 17px;
+  width: 100%;
+  margin: 20px 0;
+  padding: 20px;
+  outline: none;
+  border: 1px solid lightgray;
+  background: #f1f1f1;
+  text-align: center;
+  transition: .2s all; }
+  input#in-a-giphy-search:focus {
+    outline: none;
+    background: white;
+    border: 1px solid lightgray;
+    border-bottom: 2px solid #9474E2; }
+
+input#in-a-giphy-search::-webkit-input-placeholder {
+  color: #BABDC1;
+  border: none; }
+
+.giffies img {
+  width: 100%;
+  margin-top: 30px; }
+
+.giffies a {
+  text-decoration: none; }
+
+.giffies div#in-a-giphy-link {
+  color: #4CDA45;
+  background: #D6F1D5;
+  padding: 20px;
+  transition: .2s all;
+  text-align: center; }
+  .giffies div#in-a-giphy-link:hover {
+    background: #4cda45;
+    color: white; }
