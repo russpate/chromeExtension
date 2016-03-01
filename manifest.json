@@ -9,10 +9,11 @@
     "default_icon": "img/icon.png",
     "default_popup": "index.html",
     "default_title": "Search GIFs from Giphy",
-    "js": "content.js"
+    "js": "popup.js"
   },
   "permissions": [
     "activeTab",
+    "tabs",
     "http://api.giphy.com/"
   ]
 }

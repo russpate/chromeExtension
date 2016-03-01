@@ -20,11 +20,10 @@ var inaGiphy = {
     $('.searchForm').on('submit', 'form', function(event) {
       event.preventDefault();
       var searchTerm = $("#in-a-giphy-search").val();
-      var url = inaGiphy.baseUrl + 'v1/gifs/search?q=' + searchTerm.replace(" ","20%") + '&api_key=dc6zaTOxFJmzC';
+      var url = inaGiphy.baseUrl + 'v1/gifs/search?q=' + searchTerm.replace(" ","+") + '&api_key=dc6zaTOxFJmzC';
       inaGiphy.getGF(url);
     });
   },
-
   buildTemplate: function (templateStr) {
     return _.template(templates[searchResults]);
   },
@@ -53,7 +52,7 @@ var inaGiphy = {
       '<div class="gifBox"><img src="'
       + item.src
       + '"/>'
-      + '<a href="'
+      + '<a target="_blank" href="'
       + item.embedUrl
       + '"><div id="in-a-giphy-link">link to giphy</div></a>'
       + '</div>';
