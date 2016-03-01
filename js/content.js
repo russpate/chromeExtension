@@ -1,9 +1,9 @@
 $(document).ready(function() {
+  inaGiphy.init();
 });
 var apiKey = ("dc6zaTOxFJmzC");
-var searchItem = ("");
 var inaGiphy = {
-  baseUrl: 'http://api.giphy.com/v1/gifs/search?q=' + searchItem.replace(" ","+") + '&api_key=dc6zaTOxFJmzC' ,
+  baseUrl: 'http://api.giphy.com/',
   init: function(){
     inaGiphy.styling();
     inaGiphy.events();
@@ -11,42 +11,61 @@ var inaGiphy = {
   styling: function(){
   },
   events: function(){
-    $('#in-a-giphy').on('click', inaGiphy.submitSearch);
+    $('.app').on('submit', 'form', function(event) {
+      event.preventDefault();
+      // inaGiphy.submitSearch();
+      var searchTerm = $("#in-a-giphy-search").val();
+      var url = inaGiphy.baseUrl + 'v1/gifs/search?q=' + searchTerm.replace(" ","+") + '&api_key=dc6zaTOxFJmzC';
+      inaGiphy.getGF(url);
+    });
+  },
+  buildTemplate: function (templateStr) {
+    return _.template(templates.searchResults);
+  },
+  buildData: function (arr) {
+      return {
+        url: arr[url]
+      };
   },
   getFromDom: function () {
     var searchResult = $('input[name="giphySearch"]').val();
-    // return {
-    //   msg: msg,
-    //   username: usersName
-    // };
+    return searchResult;
   },
-  getGF: function(){
+  addToDom: function (result, $target) {
+    $target.html('');
+    var htmlInsert = "";
+      htmlInsert += templates.result;
+    $target.html(htmlInsert);
+  },
+  getGF: function(url){
     $.ajax({
-    url: inaGiphy.baseUrl,
+    url: url,
     method: 'GET',
-    success: function (msg) {
+    success: function (result) {
+      console.log("SUCCESS!", result);
+      inaGiphy.addToDom(inaGiphy.buildData(result),$('.app'));
     },
     error: function (err) {
       console.log("oh nooooo", err);
     }
   });
   },
-  addGF: function(){
+  addGF: function(newSearch){
     $.ajax({
-    url: inaGiphy.baseUrl,
-    method: 'POST',
-    success: function (msg) {
-      inaGiphy.getGF();
-    },
-    error: function (err) {
-    }
-  });
+      url: inaGiphy.baseUrl,
+      method: 'GET',
+      data: newSearch,
+      success: function (response) {
+        inaGiphy.getGF();
+      },
+      error: function (err) {
+      }
+    });
   },
-  submitSearch: function (event) {
-    inaGiphy.prevent();
+  submitSearch: function()  {
     var newSearch = inaGiphy.getFromDom();
       inaGiphy.addGF(newSearch);
-      $('input').val('');
+      $('#in-a-giphy-search').val('');
   },
 };
 
